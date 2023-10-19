@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href='../stylesheets/style.css'>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+<body>
+     <div id="main">
+
+        <div id="overlay">
+            <form action="" id="editbox" >
+                <input id="editi" type="text" name="rename" value="">
+                <input id="submit" type="submit">
+            </form>
+        </div>
+
+      <div id="left">
+
+        <div id="some-folder">
+          <h4>Some-folder</h4>
+           <div id="icons">
+            <i id="addfile" class="ri-file-add-line"></i>
+            <i id="addfolder" class="ri-folder-add-line"></i>
+            <a href="/" id="refresh"><i class="ri-restart-line"></i></a>
+            <i class="ri-file-copy-line"></i>
+           </div>
+        </div>
+
+        <div class="form fileform">
+          <form action="/addfile">
+            <input type="text" placeholder="filename" name="filename">
+          </form>
+        </div>
+       
+        <div class="form folderform">
+          <form action="/addfolder">
+          <input type="text" placeholder="foldername" name="foldername">
+          </form>
+        </div>
+
+          <div id="files">
+            <% data.forEach(function(elem){ %>
+                <div class="file">
+                  <a href="/file/ <%= elem.name %>">
+                  <% if(elem.isDirectory()){ %>
+                    <i class="ri-folder-line"></i> 
+                  <% }  else { %>
+                    <i class="ri-file-line"></i>
+                  <% }  %> 
+                  <%= elem.name %>
+                  </a>
+                
+                  <div class="fileicons">
+
+                    <a href="/edit/<%= elem.name %>" id="edit"><i class="ri-pencil-line"></i></a>
+
+                    <% if(elem.isDirectory()){ %>
+                      <a href="/folder/delete/<%= elem.name %>"> <i class="ri-delete-bin-line"></i></a>
+                    <% } else { %>
+                      <a href="/file/delete/<%= elem.name %>"> <i class="ri-delete-bin-line"></i></a>
+                    <% } %>
+                  </div>
+                </div>
+            <% }) %>
+          </div>
+          
+
+          
+      </div>
+
+      <div id="right">
+        <div class="box-right">
+          <h5>Show All Commands &nbsp;<button>&nbsp;Ctrl&nbsp;</button> + <button>&nbsp;Shift&nbsp;</button> + <button>&nbsp;P&nbsp;</button> </h5> 
+          <h5>Go to File &nbsp;<button>&nbsp;Ctrl&nbsp;</button> + <button>&nbsp;P&nbsp;</button> </h5>
+          <h5>Find in Files &nbsp;<button>&nbsp;Ctrl&nbsp;</button> + <button>&nbsp;Shift&nbsp;</button> + <button>&nbsp;F&nbsp;</button> </h5>
+          <h5>Toggle Full Screen &nbsp;<button>&nbsp;F11&nbsp;</button></h5>
+          <h5>Show Settings &nbsp;<button>&nbsp;Ctrl&nbsp;</button> + <button>&nbsp;,&nbsp;</button></h5>
+        </div>
+      </div>
+     </div>
+
+     <script>
+
+      function offKaro(){
+        document.querySelectorAll(".form")
+        .forEach(function(val){
+          val.style.display = "none";
+        })
+      }
+      
+      var clickfile = 1;
+      var clickfolder = 1;
+      var fileform = document.querySelector(".fileform");
+      var addfile = document.querySelector("#addfile");
+      addfile.addEventListener("click", function(){
+        offKaro()
+        if(clickfile === 1){
+          fileform.style.display = "initial";
+          clickfile = 0;
+        }
+        else{
+          fileform.style.display = "none";
+          clickfile = 1;
+        }
+      })
+
+      var folderform = document.querySelector(".folderform");
+      var addfolder = document.querySelector("#addfolder");
+      
+      addfolder.addEventListener("click", function(){
+        offKaro()
+        if(clickfolder === 1){
+          folderform.style.display = "initial";
+          clickfolder = 0;
+        }
+        else{
+          folderform.style.display = "none";
+          clickfolder = 1;
+        }
+      }) 
+
+
+     </script>
+    
+</body>
+</html>
